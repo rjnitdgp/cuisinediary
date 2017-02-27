@@ -5,7 +5,7 @@ var Restaurant = require("../models/restaurant");
 
 var middleware = require("../middleware");
 
-//CAMPING GROUNDS GET, get all campgrounds
+//RESTAURANTS GET, get all campgrounds
 router.get("/restaurants", function(req, res){
         
         Restaurant.find({}, function(err, allRestaurants){
