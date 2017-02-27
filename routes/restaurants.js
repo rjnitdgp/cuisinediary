@@ -21,7 +21,7 @@ router.get("/restaurants", function(req, res){
 })
 
 
-//CAMPING GROUNDS POST, get data and add to campgrounds
+//RESTAURANTS POST, get data and add to restaurant
 router.post("/restaurants", middleware.isLoggedIn, function(req, res){
     
    var name = req.body.name;
