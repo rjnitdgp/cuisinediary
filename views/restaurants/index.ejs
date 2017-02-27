@@ -1,0 +1,35 @@
+<% include ../partials/header %>
+    
+    
+<div id="show-page-body" class="container">
+    <header id="show-page-desc" class="jumbotron">
+        <div class="container">
+            <h2>Welcome to Yum Cuisine Diary <i class="fa fa-cutlery" aria-hidden="true"></i></h2>
+            <p>A great book for good cuisine places from all around the World!</p>
+            <br><a class="btn btn-primary btn-sm" href="/restaurants/new">Add a new Restaurant</a></br>
+        </div>
+    </header>
+    
+    <div class="row text-center">
+        <% restaurants.forEach(function(restaurant){ %>
+            
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= restaurant.image %>" height="300px" width="500px">
+                    <div class="caption">
+                        <h4><%= restaurant.name %></h4>
+                    </div>
+                    
+                    <p>
+                        <a href="/restaurants/<%= restaurant._id %>" class="btn btn-xs btn-primary">More Info</a>
+                    </p>
+                    
+                </div>
+            </div>
+
+        <% }) %>
+    </div>
+    <a href="/" class="btn btn-xs btn-primary">Go Back</a>
+</div>
+
+<% include ../partials/footer %>
