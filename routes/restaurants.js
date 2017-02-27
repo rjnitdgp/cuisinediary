@@ -56,7 +56,7 @@ router.get("/restaurants/new", middleware.isLoggedIn, function(req, res){
     
 })
 
-//SHOW MORE INFO ABOUT A SINGLE CAMPGROUND
+//SHOW MORE INFO ABOUT A SINGLE RESTAURANT
 router.get("/restaurants/:id", function(req, res){
     Restaurant.findById(req.params.id).populate("comments").exec(function(err, foundRestaurant){
         if(err){
@@ -67,7 +67,7 @@ router.get("/restaurants/:id", function(req, res){
     });
 })
 
-//EDIT CAMPGROUND ROUTE
+//EDIT RESTAURANT ROUTE
 router.get("/restaurants/:id/edit", middleware.checkRestaurantOwnership, function(req, res){
     Restaurant.findById(req.params.id, function(err, foundRestaurant) {
         res.render("restaurants/edit", {restaurant: foundRestaurant});
@@ -75,7 +75,7 @@ router.get("/restaurants/:id/edit", middleware.checkRestaurantOwnership, functio
 });
 
 
-//UPDATE CAMPGROUND ROUTE
+//UPDATE RESTAURANT ROUTE
 router.put("/restaurants/:id", middleware.checkRestaurantOwnership, function(req, res){
     Restaurant.findByIdAndUpdate(req.params.id, req.body.restaurant, function(err, updatedRestaurant){
         if(err){
@@ -86,7 +86,7 @@ router.put("/restaurants/:id", middleware.checkRestaurantOwnership, function(req
     });
 });
 
-//DESTROY CAMPGROUND ROUTE
+//DESTROY RESTAURANT ROUTE
 router.delete("/restaurants/:id",middleware.checkRestaurantOwnership, function(req, res){
     Restaurant.findByIdAndRemove(req.params.id, function(err){
         if(err){
