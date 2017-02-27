@@ -4,7 +4,7 @@ var express     = require("express"),
     methodOverride = require("method-override"),
     mongoose    = require("mongoose"),
     flash       = require("connect-flash"),
-    Campground  = require("./models/campground"),
+    Restaurant  = require("./models/restaurant"),
     Comment     = require("./models/comment"),
     User        = require("./models/user"),
     seedDB      = require("./seeds"),
@@ -14,12 +14,14 @@ var express     = require("express"),
     localStrategy = require("passport-local");
  
 var commentRoutes    = require("./routes/comments"),
-    campgroundRoutes = require("./routes/campgrounds"),
+    restaurantRoutes = require("./routes/restaurants"),
     authRoutes       = require("./routes/auth");
 
-console.log(process.env.DATABASEURL);
-//mongoose.connect("mongodb://raj:mota@ds023468.mlab.com:23468/yelpcamp");
-mongoose.connect(process.env.DATABASEURL);
+var url = process.env.DATABASEURL || "mongodb://localhost/restaurant_db"
+
+console.log(url);
+//mongoose.connect("mongodb://raj:mota@ds023468.mlab.com:23468/restaurant_db");
+mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -53,7 +55,7 @@ app.use(function(req, res, next){
 
 
 app.use(authRoutes);
-app.use(campgroundRoutes);
+app.use(restaurantRoutes);
 app.use(commentRoutes);
 
 //seedDB();
@@ -69,5 +71,5 @@ app.get("/", function(req, res){
 //SERVER START at PORT
 app.listen(process.env.PORT, process.env.IP, function(){
     
-    console.log("YelpCamp Server Started!");
+    console.log("Cuisine Diary Server Started...");
 })

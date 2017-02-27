@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var Campground = require("./models/campground");
+var Restaurant = require("./models/restaurant");
 var Comment = require("./models/comment");
 
 var data = [
@@ -32,26 +32,26 @@ var data = [
     
     ] 
 
-//To Remove all CampGrounds
+//To Remove all Restaurants
 function seedDB(){
 Comment.remove({}, function(err) {
     if(err){
         console.log(err);
     }
     console.log("Removed Comment/Comments");
-    Campground.remove({}, function(err){
+    Restaurant.remove({}, function(err){
     if(err){
         console.log(err);
     }
-    console.log("Removed Campgrounds");
+    console.log("Removed Restaurants");
     //To Add a few CampGrounds
     data.forEach(function(seed){
-    Campground.create(seed, function(err, campground){
+    Restaurant.create(seed, function(err, restaurant){
         if(err){
             console.log(err);
         } else{
-            console.log("Added a campground!");
-            //create a comment on each campgrouund added!
+            console.log("Added a restaurant!");
+            //create a comment on each restaurant added!
             
             Comment.create({
                 text: "This place is great, but I wish internet was there",
@@ -61,8 +61,8 @@ Comment.remove({}, function(err) {
                     if(err){
                         console.log(err);
                     } else {
-                    campground.comments.push(comment);
-                    campground.save();
+                    restaurant.comments.push(comment);
+                    restaurant.save();
                     console.log("Created new Comment!");
                     }
                     

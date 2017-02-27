@@ -2,20 +2,20 @@
 
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center">Add a new Comment to <%= campground.name %></h1>
+        <h1 style="text-align: center">Add a new Comment to <%= restaurant.name %></h1>
         <div style="width: 30%; margin: 25px auto">
-            <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
+            <form action="/restaurants/<%= restaurant._id %>/comments" method="POST">
                 <div class="form-group">
                     <input class="form-control" type="text" name="comment[text]" placeholder="text">
                 </div>
                 
                 
                 <div class="form-group">
-                    <button class="btn btn-sm btn-primary btn-block">Submit!</button>
+                    <button class="btn btn-sm btn-primary btn-block">Submit</button>
                 </div>
                 
             </form>
-            <a href="/campgrounds">Go to CampGrounds Page</a>
+            <a href="/restaurants">All Restaurants & Bars</a>
         </div>
         
     </div>

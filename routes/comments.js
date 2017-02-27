@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-var Campground = require("../models/campground");
+var Restaurant = require("../models/restaurant");
 var Comment = require("../models/comment");
 
 var middleware = require("../middleware");
@@ -9,22 +9,22 @@ var middleware = require("../middleware");
 //COMMENTS ROUTES
 //=====================
 // Open up a new comments form simply, but it has to be attached to the particular campground!
-router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function(req, res) {
-    Campground.findById(req.params.id, function(err, campground){
+router.get("/restaurants/:id/comments/new", middleware.isLoggedIn, function(req, res) {
+    Restaurant.findById(req.params.id, function(err, restaurant){
         if(err){
             console.log(err);
         } else {
-            res.render("comments/new", {campground: campground});
+            res.render("comments/new", {restaurant: restaurant});
         }
     });
 });
 
 //Submit the comment form details to the post route, Comments Create
-router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, res){
-    Campground.findById(req.params.id, function(err, campground) {
+router.post("/restaurants/:id/comments", middleware.isLoggedIn, function(req, res){
+    Restaurant.findById(req.params.id, function(err, restaurant) {
         if(err){
             console.log(err);
-            res.redirect("/campgrounds");
+            res.redirect("/restaurants");
         } else {
             Comment.create(req.body.comment, function(err, comment){
                 if(err){
@@ -36,9 +36,9 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
                     comment.author.username = req.user.username;
                     //save comment
                     comment.save();
-                    campground.comments.push(comment);
-                    campground.save();
-                    res.redirect("/campgrounds/"+campground._id);
+                    restaurant.comments.push(comment);
+                    restaurant.save();
+                    res.redirect("/restaurants/"+restaurant._id);
                 }
             });
         }
@@ -47,25 +47,25 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
 
 
 //EDIT COMMENTS ROUTE
-router.get("/campgrounds/:id/comments/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
+router.get("/restaurants/:id/comments/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
     
         Comment.findById(req.params.comment_id, function(err, foundComment) {
             
             if(err){
                 res.redirect("back");
             } else {
-                res.render("comments/edit", {campground_id: req.params.id, comment: foundComment});
+                res.render("comments/edit", {restaurant_id: req.params.id, comment: foundComment});
             }
         });
 });
 
 //UPDATE COMMENTS ROUTE
-router.put("/campgrounds/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
+router.put("/restaurants/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
         if(err){
             res.redirect("back");
         } else {
-            res.redirect("/campgrounds/" + req.params.id);
+            res.redirect("/restaurants/" + req.params.id);
         }
     
         
@@ -75,12 +75,12 @@ router.put("/campgrounds/:id/comments/:comment_id", middleware.checkCommentOwner
 
 
 //DESSTROY COMMENTS ROUTE
-router.delete("/campgrounds/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
+router.delete("/restaurants/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
    Comment.findByIdAndRemove(req.params.comment_id, function(err){
        if(err){
            res.redirect("back");
        } else {
-           res.redirect("/campgrounds/" + req.params.id);
+           res.redirect("/restaurants/" + req.params.id);
        }
    }); 
 });

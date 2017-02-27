@@ -1,32 +1,32 @@
 //All middleware goes here!!
 
-var Campground = require("../models/campground");
+var Restaurant = require("../models/restaurant");
 var Comment = require("../models/comment");
 
 
 
 var middlewareObj = {};
 
-middlewareObj.checkCampgroundOwnership = function(req, res, next){
+middlewareObj.checkRestaurantOwnership = function(req, res, next){
    
    if(req.isAuthenticated()){
-        Campground.findById(req.params.id, function(err, foundCampground){
+        Restaurant.findById(req.params.id, function(err, foundRestaurant){
             if(err){
-                req.flash("error", "Campground not found");
+                req.flash("error", "Restaurant not found");
                 res.redirect("back");
             } else {
                 
-                if(foundCampground.author.id.equals(req.user._id)){
+                if(foundRestaurant.author.id.equals(req.user._id)){
                     next();
                 } else {
-                    req.flash("error", "You do not have the permission to do that");
+                    req.flash("error", "Permission Denied");
                     res.redirect("back");
                 }
                 
             }
         });
     } else {
-        req.flash("error", "You need to be loggedIn first");
+        req.flash("error", "You need to Log in first");
         res.redirect("back");
     } 
     
@@ -46,7 +46,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
                 if(foundComment.author.id.equals(req.user._id)){
                     next();
                 } else {
-                    req.flash("error", "You do not have the permission to do that");
+                    req.flash("error", "Permission Denied-you are not the owner post!");
                     res.redirect("back");
                 }
                 
